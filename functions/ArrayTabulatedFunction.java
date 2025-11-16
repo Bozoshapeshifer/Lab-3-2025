@@ -65,6 +65,13 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
         {
             return points[pointsCount-1].getY();
         }
+        for (int i = 0; i < pointsCount; i++)
+        {
+        if (Math.abs(x - points[i].getX()) < epcilon)
+         {
+            return points[i].getY();
+        }
+        }
         int i = 0;
         double value=0;
         for (i=0;x > points[i].getX();++i)
@@ -79,13 +86,13 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
         return pointsCount;
     }
 
-    public FunctionPoint getPoint(int index) {
-        if(index<0||index>=pointsCount)
-        {
-            throw new FunctionPointIndexOutOfBoundsException("out-of-bounds");
-        }
-        return points[index];
+  public FunctionPoint getPoint(int index) 
+  {
+    if (index < 0 || index >= pointsCount) {
+        throw new FunctionPointIndexOutOfBoundsException("out-of-bounds");
     }
+    return new FunctionPoint(points[index]);  
+}
 
     public void setPoint(int index, FunctionPoint point) throws InappropriateFunctionPointException {
         double leftX=getLeftDomainBorder();

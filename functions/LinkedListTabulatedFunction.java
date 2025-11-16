@@ -114,6 +114,14 @@ public LinkedListTabulatedFunction(double leftX, double rightX, int pointsCount)
         return head.getPrev().getPoint().getY();
     }
     
+    while (current != head) {
+        double currentX = current.getPoint().getX();
+        if (Math.abs(x - currentX) < epsilon) {
+            return current.getPoint().getY(); // Возвращаем соответствующий Y
+        }
+        current = current.getNext();
+    }
+    
     while (current != head && current.getNext() != head) {
         double x1 = current.getPoint().getX();
         double x2 = current.getNext().getPoint().getX();
@@ -129,7 +137,7 @@ public LinkedListTabulatedFunction(double leftX, double rightX, int pointsCount)
     return Double.NaN;
 }
 
-FunctionNode getNodeByIndex(int index) {
+private FunctionNode getNodeByIndex(int index) {
     if (index < 0 || index >= pointsCount) 
         throw new FunctionPointIndexOutOfBoundsException("Invalid index");
     
@@ -170,7 +178,7 @@ private FunctionNode addNodeToTail() {
         return newNode;
     }
 
-FunctionNode addNodeByIndex(int index)
+private FunctionNode addNodeByIndex(int index)
 {
     FunctionNode Node = getNodeByIndex(index);
     FunctionNode prevNode = Node.getPrev();
@@ -183,7 +191,7 @@ FunctionNode addNodeByIndex(int index)
     return newNode;
 }
 
-FunctionNode deleteNodeByIndex(int index)
+private FunctionNode deleteNodeByIndex(int index)
 {
     FunctionNode Node = getNodeByIndex(index);
     FunctionNode nextNode = Node.getNext();
